@@ -1,4 +1,4 @@
-# Scalable-Serverless-Framework
+# FServerless
 a scalable serverless framework
 
 test
