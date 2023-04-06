@@ -24,14 +24,13 @@ void stopServerRunning(int p)
     printf("Close Server\n");
     exit(0);
 }
-void setResponse(char *buff) 
-{  
- string tmp = buff;
- bzero(buff, sizeof(buff)); 
- strcat(buff, "HTTP/1.1 200 OK\r\n"); 
- strcat(buff, "Connection: close\r\n"); 
- strcat(buff, "\r\n"); 
- strcat(buff, tmp.c_str());
+void setResponse(char *buff) {  
+    string tmp = buff;
+    bzero(buff, sizeof(buff)); 
+    strcat(buff, "HTTP/1.1 200 OK\r\n"); 
+    strcat(buff, "Connection: close\r\n"); 
+    strcat(buff, "\r\n"); 
+    strcat(buff, tmp.c_str());
 }
 int main()
 {
@@ -66,21 +65,24 @@ int main()
     printf("Listening...\n");
     while (true)
     {
-        signal(SIGINT, stopServerRunning);    // 这句用于在输入Ctrl+C的时候关闭服务器
-        // 对应伪代码中的connfd = accept(sockfd);
+        signal(SIGINT, stopServerRunning);
         connfd = accept(sockfd, NULL, NULL);
-        if (-1 == connfd)
-        {
+        if (-1 == connfd){
             printf("Accept error(%d): %s\n", errno, strerror(errno));
             return -1;
         }
-        // END
         bzero(buff, BUFFSIZE);
-        // 对应伪代码中的recv(connfd, buff);
         recv(connfd, buff, BUFFSIZE - 1, 0);
         //read commond
         string commond[20];
         string allcommond = buff;
+        // //错误处理
+        // cout << "111"<<allcommond<<"222" <<endl;
+        // if(allcommond == ""||allcommond == " "){
+        //     send(connfd, "error use", 20, 0);
+        //     close(connfd);
+        //     continue;
+        // }
         int i = 0;
         while(allcommond!=""){
             commond[i] = allcommond.substr(0,allcommond.find(' '));

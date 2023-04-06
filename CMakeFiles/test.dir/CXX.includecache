@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lz/Desktop/FServerless/config.h
+
+/home/lz/Desktop/FServerless/function.h
+string
+-
+unordered_map
+-
+vector
+-
+set
+-
+
+/home/lz/Desktop/FServerless/test.cpp
+hv/HttpServer.h
+/home/lz/Desktop/FServerless/hv/HttpServer.h
+iostream
+-
+string
+-
+function.h
+/home/lz/Desktop/FServerless/function.h
+config.h
+/home/lz/Desktop/FServerless/config.h
+

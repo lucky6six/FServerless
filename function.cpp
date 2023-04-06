@@ -1,59 +1,60 @@
 #include "function.h"
+#include "config.h"
 #include <iostream>
 using namespace std;
-// bool bindFunc(string name,string ip){
-//     auto ret = registeredTable.find(name);
-//     if(ret==registeredTable.end()){
-//         // vector<string> tmp;
-//         // tmp.push_back(ip);
-//         // registeredTable.emplace(pair<string,vector<string>>{name,tmp});
-//         cout<<"wrong function name"<<endl;
-//         return 0;
-//     }else{
-//         // registeredTable[name].push_back(ip);
-//         ret->second.push_back(ip);
-//     }  
-//     return 1;
-// }
 
-bool registerFunc(string name){
-    bool ret = 1;
-    if(registeredTable.find(name)==registeredTable.end()){
-        vector<string> tmp;//默认为空
-        registeredTable.emplace(pair<string,vector<string>>{name,tmp});
-    }else{
-        // registeredTable[name].push_back(ip);
-        // ret->second.push_back(ip);
-        ret = 0;
-        cout <<"ERROR:Function Name Already Exist"<<endl;
-    }  
+
+
+Function::Function(string a,string b,int c){
+    name = a;
+    code = b;
+    num = c;
+}
+
+Function::~Function(){
+}
+
+
+FunctionTable::FunctionTable(){
+    registeredTable = new unordered_map<string,vector<node>>;
+    funcInfoTable = new unordered_map<string,Function>;
+}
+
+FunctionTable::~FunctionTable(){
+    delete registeredTable;
+    delete funcInfoTable;
+}
+
+bool FunctionTable::isExist(string funcName){
+    if(registeredTable->find(funcName)==registeredTable->end()){
+        return 0;
+    }
+    return 1;
+}
+
+node FunctionTable::selectNode(string funcName){
+    string ret;
+    if(!isExist(funcName)){
+        ret =  "error";
+        return ret;
+    }
+    auto it = registeredTable->find(funcName);
+    vector<node> nodeIps = it->second;
+    if(nodeIps.size()==0){
+        return "";
+    }
+    if(FUNC_INVOKE_STRATEGY == "DEFAULT"){
+        auto its = funcInfoTable->find(funcName);
+        int num = its->second.num;
+        ret = nodeIps.at(num%nodeIps.size());
+    }
     return ret;
 }
 
-bool createFunc(string name,string code){
-    // if(entityCreateStrategy==Warm){
-    //     createEntity()
-    // }
-    function* func = new function;
-    func->code = code;
-    func->name = name;
-    function funct = *func;
-    funcTable.push_back(funct);
-    return registerFunc(name);
+string FunctionTable::findCode(string funcName){
+    if(!isExist(funcName)){
+        return "";
+    }
+    auto its = funcInfoTable->find(funcName);
+    return its->second.code;
 }
-
-// string findEntity(string name){
-
-// }
-
-// string invokeFunc(string name){
-//     auto ret = findEntity(name);
-//     if(ret == ""){
-//         selectNode();
-//         createEntity();
-//         bindEntity();
-//         findEntity();
-//     }
-//     selectEntity();
-//     invokeEntity();
-// }
