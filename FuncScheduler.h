@@ -1,5 +1,6 @@
 #include "function.h"
 #include "node.h"
+#include <curl/curl.h>
 using namespace std;
 
 class FuncScheduler{
@@ -17,4 +18,4 @@ class FuncScheduler{
         node newEntityCreate(string funcName);
         //将node的ip在Functiontable进行绑定
         bool bindFunc(string funcName,node ip);
-}
+};

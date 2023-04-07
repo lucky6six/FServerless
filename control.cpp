@@ -8,6 +8,8 @@ using namespace std;
 
 int main() {
     HttpService router;
+    static FuncScheduler* scheduler = new FuncScheduler();
+    static FuncFactory* factory = new FuncFactory();
     // FuncFactory* factory = new FuncFactory();
     // factory->functionCreate(funcName,code);
     // // curl -v http://ip:port/
@@ -32,7 +34,7 @@ int main() {
     router.GET("/invoke", [](HttpRequest* req, HttpResponse* resp) {
         // cout<<req->query_params["name"]<<endl;
         // cout<<req->query_params["para"]<<endl;
-        static FuncScheduler* scheduler = new FuncScheduler();
+
         string funcName = req->query_params["name"];
         string para = req->query_params["para"];
         string ret = scheduler->invokeFunc(funcName,para);
@@ -51,7 +53,6 @@ int main() {
 
     // curl -v http://ip:port/echo -d "hello,world!"
     router.POST("/create", [](const HttpContextPtr& ctx) {
-        static FuncFactory* factory = new FuncFactory();
         string funcName,code;
         string body = ctx->body();
         string ret;

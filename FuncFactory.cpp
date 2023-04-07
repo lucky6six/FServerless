@@ -1,7 +1,7 @@
 #include "FuncFactory.h"
 
 using namespace std;
-FunctionTable* funcTable;
+// FunctionTable* funcTable;
 FuncFactory::FuncFactory(){
     funcTable = new FunctionTable();
 }

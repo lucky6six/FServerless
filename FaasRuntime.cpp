@@ -2,12 +2,14 @@
 #include <iostream>
 #include <string>
 #include "config.h"
-#include "FuncFactory.h"
-#include "FuncScheduler.h"
+#include "EntityFactory.h"
+#include "EntityScheduler.h" 
 using namespace std;
 
 int main() {
     HttpService router;
+    static EntityScheduler* scheduler = new EntityScheduler();  
+    static EntityFactory* factory = new EntityFactory();
     // FuncFactory* factory = new FuncFactory();
     // factory->functionCreate(funcName,code);
     // // curl -v http://ip:port/
@@ -35,7 +37,7 @@ int main() {
         // static FuncScheduler* scheduler = new FuncScheduler();
         string funcName = req->query_params["name"];
         string para = req->query_params["para"];
-        // string ret = scheduler->invokeFunc(funcName,para);
+        string ret = scheduler->invokeFunc(funcName,para);
         resp->json["origin"] = req->client_addr.ip;
         resp->json["url"] = req->url;
         resp->json["args"] = req->query_params;
@@ -51,7 +53,6 @@ int main() {
 
     // curl -v http://ip:port/echo -d "hello,world!"
     router.POST("/create", [](const HttpContextPtr& ctx) {
-        static FuncFactory* factory = new FuncFactory();
         string funcName,code;
         string body = ctx->body();
         string ret;
@@ -63,6 +64,12 @@ int main() {
             cout<<funcName<<"1    1"<<code<<endl;
         }
         // //createfunc name 
+        bool isok = factory->entityCreate(funcName,code);
+        if(isok){
+            ret = "create success";
+        }else{
+            ret = "create failed";
+        }
         // ret = factory->functionCreate(funcName,code);
         //// delete factory;
         //type == 100 -> TEXT

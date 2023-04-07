@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <vector>
 #include "node.h"
-
+#include "config.h"
 using namespace std;
 
 class Function{

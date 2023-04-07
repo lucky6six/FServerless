@@ -1,5 +1,5 @@
 #include "function.h"
-#include "config.h"
+
 #include <iostream>
 using namespace std;
 
