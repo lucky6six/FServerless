@@ -1,7 +1,6 @@
 #include "hv/HttpServer.h"
 #include <iostream>
 #include <string>
-#include "config.h"
 #include "FuncFactory.h"
 #include "FuncScheduler.h"
 using namespace std;
