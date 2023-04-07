@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <string.h>
+
 using namespace std;
 
 unordered_map<string, vector<node>> FunctionTable::registeredTable;

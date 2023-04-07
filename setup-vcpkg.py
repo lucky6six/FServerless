@@ -50,7 +50,7 @@ class library_task:
 
     def __init__(self, name: str,
                  use_overlay_ports: bool = False,
-                 use_overlay_triplets: bool = True,
+                 use_overlay_triplets: bool = False,
                  os_flags: OSFlags = OSFlags.ALL):
         self.name = name
         self.use_overlay_ports = use_overlay_ports

@@ -1,5 +1,7 @@
 #include "node.h"
 
+#include <cstring>
+
 NodeTable::NodeTable() {
     nodeList.push_back(WORKER1);
     // nodeList.push_back(WORKER2);
