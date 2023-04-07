@@ -1,4 +1,0 @@
-/home/lz/Desktop/FServerless/CMakeFiles/edit_cache.dir
-/home/lz/Desktop/FServerless/CMakeFiles/client.dir
-/home/lz/Desktop/FServerless/CMakeFiles/rebuild_cache.dir
-/home/lz/Desktop/FServerless/CMakeFiles/control.dir

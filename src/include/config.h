@@ -1,0 +1,19 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
+#define BASEURL "192.168.140.134:16555/" 
+#define PORT 16555
+#define MASTERIP "192.168.140.134"
+#define WORKER1 "192.168.140.135:16555"
+#define WORKER2 "192.168.140.136:16555"
+// dafault means Polling轮询
+
+#define FUNC_CREATE_STRATEGY "DEFAULT"
+#define FUNC_INVOKE_STRATEGY "DEFAULT"
+#define SCALE 1000//函数访问次数达到SCALE进行扩容
+
+#define ISOLATION "DOCKER"
+#define ENTITY_CREATE_STRATEGY "DEFAULT"
+#define ENTITY_INVOKE_STRATEGY "DEFAULT"
+
+#endif // __CONFIG_H__

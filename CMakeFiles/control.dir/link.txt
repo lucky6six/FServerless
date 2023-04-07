@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/control.dir/control.cpp.o CMakeFiles/control.dir/FuncFactory.cpp.o CMakeFiles/control.dir/function.cpp.o CMakeFiles/control.dir/node.cpp.o  -o control  -lhv 
