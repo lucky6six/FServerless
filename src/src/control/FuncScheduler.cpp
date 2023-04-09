@@ -47,7 +47,6 @@ string FuncScheduler::invoke(string funcName, string para, node targetNode) {
     // }
 
     // return res;
-    return "test";
     CURLcode res;
     std::string tmp;
     std::string url = targetNode + "/invoke?name=" + funcName + "&para=" + para;

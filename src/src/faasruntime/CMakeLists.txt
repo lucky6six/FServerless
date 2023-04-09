@@ -1,4 +1,4 @@
-project(fassruntime)
+project(faasruntime)
 
 file(GLOB _src *.h *.cpp)
 

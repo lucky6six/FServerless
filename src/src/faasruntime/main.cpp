@@ -1,7 +1,7 @@
-#include "hv/HttpServer.h"
 #include <iostream>
 #include <string>
-#include "config.h"
+
+#include "hv/HttpServer.h"
 #include "EntityFactory.h"
 #include "EntityScheduler.h" 
 using namespace std;
@@ -66,9 +66,9 @@ int main() {
         // //createfunc name 
         bool isok = factory->entityCreate(funcName,code);
         if(isok){
-            ret = "create success";
+            ret = "create success\n";
         }else{
-            ret = "create failed";
+            ret = "create failed\n";
         }
         // ret = factory->functionCreate(funcName,code);
         //// delete factory;

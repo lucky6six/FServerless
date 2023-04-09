@@ -12,7 +12,7 @@ std::string Entity::entityRun(std::string para){
     std::string ret = "";
     if(ISOLATION == "DOCKER"){
         std::string ip = entityIp;
-        ret = "docker ret" + para;
+        ret = "docker ret" + entityIp;
     }
     return ret;
 }
@@ -50,8 +50,11 @@ bool EntityTable::bindEntity(std::string funcName,Entity entity){
         std::cout<<"error name when bind entity"<<std::endl;
         return 0;
     }
-    auto entityList = table.find(funcName)->second;
-    entityList.push_back(entity);
+    // auto entityList = &(table.find(funcName)->second);
+
+    // std::cout<<entity.entityIp<<std::endl;
+    // entityList->push_back(entity);
+    table.find(funcName)->second.push_back(entity);
     return 1;
 }
 Entity EntityTable::selectEntity(std::string funcName){
@@ -61,7 +64,9 @@ Entity EntityTable::selectEntity(std::string funcName){
         Entity r("no func");
         return r;
     }
+    std::cout<<"funcName "<<funcName<<std::endl;
     auto entityList = table.find(funcName)->second;
+    std::cout<<entityList.size()<<std::endl;
     if(entityList.size()==0){
         std::cout<<"no entity"<<std::endl;
         Entity r("no entity");

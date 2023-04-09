@@ -25,13 +25,18 @@ bool EntityFactory::entityCreate(std::string funcName,std::string code){
     }
     if(isok){
         if(EntityTable::entityTable.isExist(funcName)){
+            cout<<"1"<<endl;
             EntityTable::entityTable.bindEntity(funcName,entity);
+            cout<<"2"<<endl;
         }else{
             vector<Entity> tmp;
+            cout<<"3"<<endl;
             EntityTable::entityTable.table.emplace(funcName,tmp);
+            cout<<"4"<<endl;
             EntityTable::funcCount.emplace(funcName,0);
-            delete &tmp;
+            cout<<"5"<<endl;
             EntityTable::entityTable.bindEntity(funcName,entity);
+            cout<<"1"<<endl;
             codeTable.emplace(funcName,code);
         }
         entityInterconnectEnable(entity);
