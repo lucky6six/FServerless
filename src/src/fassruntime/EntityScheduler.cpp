@@ -13,7 +13,7 @@ EntityScheduler::~EntityScheduler(){
 Entity EntityScheduler::selectEntity(string funcName){
     Entity ret;
     if(ENTITY_INVOKE_STRATEGY == "DEFAULT"){
-        ret = entityTable->selectEntity(funcName);
+        ret = EntityTable::entityTable.selectEntity(funcName);
     }
     return ret;
 }
@@ -23,10 +23,10 @@ string EntityScheduler::invokeEntity(string para,Entity entity){
 }
 
 string EntityScheduler::invokeFunc(string funcName,string para){
-    if(!entityTable->isExist(funcName)){
+    if(!EntityTable::entityTable.isExist(funcName)){
         cout<<"error funcName"<<endl;
         return "error";
     }
     Entity entity = selectEntity(funcName);
-    return entity.entityRun(para,entity);
+    return entity.entityRun(para);
 }

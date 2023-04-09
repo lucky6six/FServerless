@@ -4,32 +4,37 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include "config.h"
 #include <iostream>
-using namespace std;
+
+#include "config.h"
+
+// using namespace std;
 
 class Entity{
     public:
-        string entityIp;
+        std::string entityIp;
         // string funcName;
-        string entityRun(string para);
-        Entity(string ip);
+        std::string entityRun(std::string para);
+        Entity(std::string ip);
+        Entity();
         ~Entity();
 };
 
 class EntityTable{
     public:
         //funcName,entityIp
-        static unordered_map<string,vector<Entity>> table;
-        
+        static std::unordered_map<std::string,std::vector<Entity>> table;
+
+        static std::unordered_map<std::string,int> funcCount;
+
+        static EntityTable entityTable;
+                   
         EntityTable();
         ~EntityTable();
-        Entity selectEntity(string funcName);
-        bool bindEntity(string funcName,Entity entity);
-        bool isExist(string funcName);
+        Entity selectEntity(std::string funcName);
+        bool bindEntity(std::string funcName,Entity entity);
+        bool isExist(std::string funcName);
 };
 
-extern EntityTable* entityTable;
-extern unordered_map<string,int> funcCount;
 
 #endif // __ENTITY_H__

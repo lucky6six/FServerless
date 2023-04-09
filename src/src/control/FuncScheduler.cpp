@@ -16,7 +16,13 @@ FuncScheduler::~FuncScheduler() {
     curl_easy_cleanup(curl);
 }
 // to do
-string FuncScheduler::invoke(string funcName, string para, node ip) {
+size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
+{
+    ((std::string*)userdata)->append(ptr, nmemb);
+    return nmemb;
+}
+
+string FuncScheduler::invoke(string funcName, string para, node targetNode) {
     // return funcName << " "<<para<<" "<<ip<<" runtime";
 
     // CURLcode res;
@@ -37,15 +43,29 @@ string FuncScheduler::invoke(string funcName, string para, node ip) {
     //     strcat(url, para);
     //     // cout<<url<<endl;
         
-    //     curl_easy_setopt(curl, CURLOPT_URL, url);
+
+    // }
+
+    // return res;
+    return "test";
+    CURLcode res;
+    std::string tmp;
+    std::string url = targetNode + "/invoke?name=" + funcName + "&para=" + para;
+    // curl_easy_setopt(curl, CURLOPT_URL, url.data());
+    // curl_easy_setopt(curl, CURLOPT_POSTFIELDS, buf.data());
+    curl_easy_setopt(curl, CURLOPT_URL, url.data());
+    std::string response_data;        
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_data);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
     //     res = curl_easy_perform(curl);
     //     if (res != CURLE_OK) {
     //         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
     //     }
-    // }
-
-    // return res;
-    return {};
+    res = curl_easy_perform(curl);
+    if (res != CURLE_OK) {
+        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+    }
+    return response_data;
 }
 
 

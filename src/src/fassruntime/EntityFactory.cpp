@@ -2,50 +2,43 @@
 
 using namespace std;
 
+std::unordered_map<std::string,std::string> EntityFactory::codeTable;
+
 EntityFactory::EntityFactory(){
-    entityTable = new EntityTable();
-    funcCount = new unordered_map<string,int>();
-    codeTable = new unordered_map<string,string>();
 }
-
 EntityFactory::~EntityFactory(){
-    delete entityTable;
-    delete funcCount;
-    delete codeTable;
 }
 
-EntityFactory::entityInterconnectEnable(Entity){
-    cout<<"enable inter"<<endl;
+void EntityFactory::entityInterconnectEnable(Entity){
+    std::cout<<"enable inter"<<std::endl;
 }
-
-//return ip
-bool EntityFactory::entityCreate(string funcName,string code){
-    bool isok = 0;
-    string ip;
-    Entity* entity;
+bool EntityFactory::entityCreate(std::string funcName,std::string code){
+    bool isok = false;
+    std::string ip;
+    Entity entity;
     //tode
     if(ISOLATION == "DOCKER"){
-        cout<<"create success "<<code<<endl;
+        std::cout<<"create success "<<code<<std::endl;
         isok = 1;
         ip = "1.1.1.1:1";
-        entity = new Entity(ip);
+        entity.entityIp = ip;
     }
     if(isok){
-        if(entityTable->isExist(funcName)){
-            entityTable->bindEntity(funcName,entity);
+        if(EntityTable::entityTable.isExist(funcName)){
+            EntityTable::entityTable.bindEntity(funcName,entity);
         }else{
             vector<Entity> tmp;
-            entityTable->table.emplace(funcName,tmp);
-            funcCount.emplace(funcName,0);
+            EntityTable::entityTable.table.emplace(funcName,tmp);
+            EntityTable::funcCount.emplace(funcName,0);
             delete &tmp;
-            entityTable->bindEntity(funcName,entity);
+            EntityTable::entityTable.bindEntity(funcName,entity);
             codeTable.emplace(funcName,code);
         }
         entityInterconnectEnable(entity);
         cout<<"create success"<<endl;
     }else{
         cout<<"create failed"<<endl;
-        return 0;
+        return false;
     }
-    return 1;
+    return true;
 }

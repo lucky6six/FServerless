@@ -1,34 +1,43 @@
 #include "entity.h"
 
+
+
+std::unordered_map<std::string,std::vector<Entity>> EntityTable::table;
+
+std::unordered_map<std::string,int> EntityTable::funcCount;
+
+EntityTable EntityTable::entityTable;
 //tode
-string Entity::entityRun(string para){
-    string ret = "";
+std::string Entity::entityRun(std::string para){
+    std::string ret = "";
     if(ISOLATION == "DOCKER"){
-        string ip = entityIp;
-        ret = "docker ret";
+        std::string ip = entityIp;
+        ret = "docker ret" + para;
     }
     return ret;
 }
 
-Entity::Entity(string ip){
+Entity::Entity(std::string ip){
     entityIp = ip;
 }
+
+Entity::Entity(){
+}
+
 
 Entity::~Entity(){
 
 }
 
 EntityTable::EntityTable(){
-    table = new unordered_map<string,vector<Entity>>;
     // funcCount = new unordered_map<string,int>;
 }
 
 EntityTable::~EntityTable(){
-    delete table;
     // delete funcCount;
 }
 
-bool EntityTable::isExist(string funcName){
+bool EntityTable::isExist(std::string funcName){
     if(table.find(funcName)==table.end()){
         return 0;
     }else{
@@ -36,26 +45,26 @@ bool EntityTable::isExist(string funcName){
     }
     return 1;
 }
-bool EntityTable::bindEntity(string funcName,Entity entity){
+bool EntityTable::bindEntity(std::string funcName,Entity entity){
     if(!isExist(funcName)){
-        cout<<"error name when bind entity"<<endl;
+        std::cout<<"error name when bind entity"<<std::endl;
         return 0;
     }
     auto entityList = table.find(funcName)->second;
     entityList.push_back(entity);
     return 1;
 }
-Entity EntityTable::selectEntity(string funcName){
+Entity EntityTable::selectEntity(std::string funcName){
     Entity ret;
     if(!isExist(funcName)){
-        cout<<"error funcName"<<endl;
+        std::cout<<"error funcName"<<std::endl;
         Entity r("no func");
         return r;
     }
     auto entityList = table.find(funcName)->second;
     if(entityList.size()==0){
-        cout<<"no entity"<<endl;
-        Entity r("no entity")<<endl;
+        std::cout<<"no entity"<<std::endl;
+        Entity r("no entity");
         return r;
     }
     if(ENTITY_INVOKE_STRATEGY == "DEFAULT"){

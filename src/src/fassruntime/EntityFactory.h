@@ -5,10 +5,10 @@
 
 class EntityFactory {
 public:
-    static unordered_map<string, string> codeTable;
+    static std::unordered_map<std::string,std::string> codeTable;
     EntityFactory();
     ~EntityFactory();
-    bool entityCreate(string funcName, string code);
+    bool entityCreate(std::string funcName, std::string code);
     void entityInterconnectEnable(Entity);
 };
 
