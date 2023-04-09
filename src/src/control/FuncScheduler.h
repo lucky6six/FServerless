@@ -9,8 +9,9 @@ using namespace std;
 
 class FuncScheduler {
 public:
+    CURL* curl;
+    CURL* gcurl;
     NodeTable table;
-    CURL *curl;
 
     FuncScheduler();
     ~FuncScheduler();

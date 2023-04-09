@@ -23,49 +23,31 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 }
 
 string FuncScheduler::invoke(string funcName, string para, node targetNode) {
-    // return funcName << " "<<para<<" "<<ip<<" runtime";
-
-    // CURLcode res;
-    // string tmp;
-    // char url[100] = "";
-    // if (curl) {
-    //     strcat(url, ip.data());
-    //     // todo port
-    //     tmp = "/invoke";
-    //     strcat(url, tmp.data());
-    //     tmp = "?name=";
-    //     strcat(url, tmp);
-    //     // funcName
-    //     strcat(url, funcName);
-    //     tmp = "&para=";
-    //     strcat(url, tmp);
-    //     // para
-    //     strcat(url, para);
-    //     // cout<<url<<endl;
-        
-
-    // }
-
-    // return res;
-    return "test";
+    // CURL *curl;
     CURLcode res;
     std::string tmp;
     std::string url = targetNode + "/invoke?name=" + funcName + "&para=" + para;
     // curl_easy_setopt(curl, CURLOPT_URL, url.data());
     // curl_easy_setopt(curl, CURLOPT_POSTFIELDS, buf.data());
-    curl_easy_setopt(curl, CURLOPT_URL, url.data());
+
     std::string response_data;        
+    //改回get请求
+    curl_easy_setopt(curl, CURLOPT_POST, 0L);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_data);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-    //     res = curl_easy_perform(curl);
-    //     if (res != CURLE_OK) {
-    //         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-    //     }
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        }
+    cout<<url.data()<<endl;
+    curl_easy_setopt(curl, CURLOPT_URL, url.data());
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
     }
+    // response_data.find()
     return response_data;
+    // return "ok";
 }
 
 
@@ -117,7 +99,7 @@ node FuncScheduler::newEntityCreate(string funcName) {
     if (!strcmp(FUNC_CREATE_STRATEGY, "DEFAULT")) {
         targetNode = findNodeToCreate();
         code = FunctionTable::funcTable.findCode(funcName);
-        cout << "create " << funcName << " entity with code " << code << " in " << targetNode << endl;
+        std::cout << "create " << funcName << " entity with code " << code << " in " << targetNode << endl;
         // createEntity(string funcName,string code,node ip)
         createEntity(funcName, code, targetNode);
         if (0) {
@@ -135,7 +117,7 @@ node FuncScheduler::findNodeToInvoke(string funcName) {
     if (ret == "") {
         node targetNode = newEntityCreate(funcName);
         if (targetNode == "") {
-            cout << "can't create the first entity" << endl;
+            std::cout << "can't create the first entity" << endl;
             return "";
         } else {
             ret = targetNode;
@@ -155,8 +137,9 @@ string FuncScheduler::invokeFunc(string funcName, string para) {
         node ip = findNodeToInvoke(funcName);
         ret = invoke(funcName, para, ip);
         // 自动扩容
-        int num = (FunctionTable::funcTable.funcInfoTable.find(funcName)->second.num++);
+        int num = (++FunctionTable::funcTable.funcInfoTable.find(funcName)->second.num);
         if (num % SCALE == 0) {
+            cout<<"scale"<<endl;
             newEntityCreate(funcName);
         }
     }
