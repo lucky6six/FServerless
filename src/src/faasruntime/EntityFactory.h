@@ -8,7 +8,8 @@ public:
     static std::unordered_map<std::string,std::string> codeTable;
     EntityFactory();
     ~EntityFactory();
-    bool entityCreate(std::string funcName, std::string code);
+    Entity entityCreate(std::string funcName, std::string code);
+    bool entityNew(std::string funcName, std::string code);
     void entityInterconnectEnable(Entity);
 };
 

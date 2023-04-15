@@ -5,18 +5,21 @@
 #include <vector>
 #include <string>
 #include <iostream>
-
+//todo 减少sleep
+#include <unistd.h>
 #include "config.h"
+#include "os_shim.h"
 
 // using namespace std;
 
 class Entity{
     public:
-        std::string entityIp;
+        std::string entityKey;
         // string funcName;
         std::string entityRun(std::string para);
-        Entity(std::string ip);
+        // Entity(std::string ip);
         Entity();
+        Entity(std::string funcName,std::string code);
         ~Entity();
 };
 

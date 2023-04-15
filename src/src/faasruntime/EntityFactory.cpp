@@ -12,17 +12,27 @@ EntityFactory::~EntityFactory(){
 void EntityFactory::entityInterconnectEnable(Entity){
     std::cout<<"enable inter"<<std::endl;
 }
-bool EntityFactory::entityCreate(std::string funcName,std::string code){
+
+Entity EntityFactory::entityCreate(string funcName,string code){
+    Entity entity(funcName,code);
+    return entity;
+}
+
+bool EntityFactory::entityNew(std::string funcName,std::string code){
     bool isok = false;
     std::string ip;
-    Entity entity;
-    //tode
-    if(ISOLATION == "DOCKER"){
-        std::cout<<"create success "<<code<<std::endl;
-        isok = 1;
-        ip = "1.1.1.1:1";
-        entity.entityIp = ip;
-    }
+    Entity entity = entityCreate(funcName,code);
+    if(entity.entityKey!=""){
+        isok = true;
+    }  
+    // //tode
+    // if(ISOLATION == "DOCKER"){
+    //     std::cout<<"create success "<<code<<std::endl;
+    //     isok = 1;
+    //     ip = "1.1.1.1:1";
+    //     entity.entityKey = ip;
+
+    // }
     if(isok){
         if(EntityTable::entityTable.isExist(funcName)){
             cout<<"1"<<endl;

@@ -22,6 +22,8 @@ string EntityScheduler::invokeEntity(string para,Entity entity){
     return entity.entityRun(para);
 }
 
+// string thread_invoke(string funcName,string para){}
+
 string EntityScheduler::invokeFunc(string funcName,string para){
     if(!EntityTable::entityTable.isExist(funcName)){
         cout<<"error funcName"<<endl;

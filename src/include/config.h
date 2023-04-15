@@ -16,4 +16,11 @@
 #define ENTITY_CREATE_STRATEGY "DEFAULT"
 #define ENTITY_INVOKE_STRATEGY "DEFAULT"
 
+#define OS "LINUX"
+#define CMD_RESULT_BUF_SIZE 1024
+// #define DOCKER_DEMO_PATH  "./dockerdemo/"
+// #define DOCKER_IMAGES_INFO_PATH "./dockerConfig/"
+#define DOCKER_DEMO_PATH  "/home/lz/Desktop/pro/FServerless/dockerdemo/"
+#define DOCKER_IMAGES_INFO_PATH "/home/lz/Desktop/pro/FServerless/dockerConfig/"
+#define INTERCONNECTION "HTTP"
 #endif // __CONFIG_H__

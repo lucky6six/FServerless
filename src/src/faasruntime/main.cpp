@@ -64,7 +64,7 @@ int main() {
             cout<<funcName<<"1    1"<<code<<endl;
         }
         // //createfunc name 
-        bool isok = factory->entityCreate(funcName,code);
+        bool isok = factory->entityNew(funcName,code);
         if(isok){
             ret = "create success\n";
         }else{
