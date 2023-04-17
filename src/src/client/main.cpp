@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
         cout << "too short para" << endl;
         return 0;
     }
+
     CURL *curl;
     CURLcode res;
     curl = curl_easy_init();

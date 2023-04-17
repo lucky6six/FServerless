@@ -6,6 +6,7 @@
 class EntityFactory {
 public:
     static std::unordered_map<std::string,std::string> codeTable;
+    int ip = 1;
     EntityFactory();
     ~EntityFactory();
     Entity entityCreate(std::string funcName, std::string code);

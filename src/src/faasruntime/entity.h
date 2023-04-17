@@ -9,17 +9,17 @@
 #include <unistd.h>
 #include "config.h"
 #include "os_shim.h"
-
+#include <curl/curl.h>
 // using namespace std;
 
 class Entity{
     public:
-        std::string entityKey;
+        std::string entityIp;
         // string funcName;
         std::string entityRun(std::string para);
         // Entity(std::string ip);
         Entity();
-        Entity(std::string funcName,std::string code);
+        Entity(std::string funcName,std::string code,int ip);
         ~Entity();
 };
 

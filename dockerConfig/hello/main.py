@@ -11,6 +11,7 @@
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
+import Fhttp
 
 class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -18,7 +19,7 @@ class MyHandler(BaseHTTPRequestHandler):
         query = parse_qs(urlparse(self.path).query)
 
         # 获取参数值
-        name = query.get('para', [''])[0]
+        para = query.get('para', [''])[0]
 
         # 构造响应
         self.send_response(200)
@@ -26,6 +27,7 @@ class MyHandler(BaseHTTPRequestHandler):
         self.end_headers()
         # self.wfile.write(bytes("<html><head><title>Python HTTP Server</title></head>", "utf-8"))
         # self.wfile.write(bytes("<body><p>Hello, %s!</p>" % name, "utf-8"))
+        para = Fhttp.call(para)
         self.wfile.write(bytes("hello %s " % para, "utf-8"))
 
 if __name__ == '__main__':

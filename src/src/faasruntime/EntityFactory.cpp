@@ -5,6 +5,9 @@ using namespace std;
 std::unordered_map<std::string,std::string> EntityFactory::codeTable;
 
 EntityFactory::EntityFactory(){
+    char result[CMD_RESULT_BUF_SIZE];
+    string cmd = "docker network create --subnet=172.50.0.0/24 fnet"; 
+    ExecuteCMD(cmd.data(), result);
 }
 EntityFactory::~EntityFactory(){
 }
@@ -14,7 +17,8 @@ void EntityFactory::entityInterconnectEnable(Entity){
 }
 
 Entity EntityFactory::entityCreate(string funcName,string code){
-    Entity entity(funcName,code);
+    ip++;
+    Entity entity(funcName,code,ip);
     return entity;
 }
 
@@ -22,7 +26,7 @@ bool EntityFactory::entityNew(std::string funcName,std::string code){
     bool isok = false;
     std::string ip;
     Entity entity = entityCreate(funcName,code);
-    if(entity.entityKey!=""){
+    if(entity.entityIp!=""){
         isok = true;
     }  
     // //tode

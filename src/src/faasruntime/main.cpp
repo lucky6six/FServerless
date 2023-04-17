@@ -38,11 +38,12 @@ int main() {
         string funcName = req->query_params["name"];
         string para = req->query_params["para"];
         string ret = scheduler->invokeFunc(funcName,para);
-        resp->json["origin"] = req->client_addr.ip;
-        resp->json["url"] = req->url;
-        resp->json["args"] = req->query_params;
-        resp->json["headers"] = req->headers;
-        resp->json["body"] = ret;
+        // resp->json["origin"] = req->client_addr.ip;
+        // resp->json["url"] = req->url;
+        // resp->json["args"] = req->query_params;
+        // resp->json["headers"] = req->headers;
+        // resp->json["body"] = ret;
+        resp->String(ret);
         return 200;
     });
 
