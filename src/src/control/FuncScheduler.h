@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 
 #include "function.h"
+#include "tool.h"
 
 using namespace std;
 

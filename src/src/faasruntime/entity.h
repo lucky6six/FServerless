@@ -1,16 +1,19 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
+
 #include <unordered_map>
 #include <vector>
 #include <string>
 #include <iostream>
-//todo 减少sleep
 #include <unistd.h>
 #include "config.h"
 #include "os_shim.h"
 #include <curl/curl.h>
+#include "tool.h"
 // using namespace std;
+
+
 
 class Entity{
     public:
@@ -38,6 +41,5 @@ class EntityTable{
         bool bindEntity(std::string funcName,Entity entity);
         bool isExist(std::string funcName);
 };
-
 
 #endif // __ENTITY_H__

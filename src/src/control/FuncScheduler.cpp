@@ -6,7 +6,11 @@
 #include <string.h>
 
 using namespace std;
-
+size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
+{
+    ((std::string*)userdata)->append(ptr, nmemb);
+    return nmemb;
+}
 FuncScheduler::FuncScheduler() {
     // 记录worker节点信息。
     curl = curl_easy_init();
@@ -15,39 +19,9 @@ FuncScheduler::FuncScheduler() {
 FuncScheduler::~FuncScheduler() {
     curl_easy_cleanup(curl);
 }
-// to do
-size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
-{
-    ((std::string*)userdata)->append(ptr, nmemb);
-    return nmemb;
-}
 
 string FuncScheduler::invoke(string funcName, string para, node targetNode) {
-    // return funcName << " "<<para<<" "<<ip<<" runtime";
-
-    // CURLcode res;
-    // string tmp;
-    // char url[100] = "";
-    // if (curl) {
-    //     strcat(url, ip.data());
-    //     // todo port
-    //     tmp = "/invoke";
-    //     strcat(url, tmp.data());
-    //     tmp = "?name=";
-    //     strcat(url, tmp);
-    //     // funcName
-    //     strcat(url, funcName);
-    //     tmp = "&para=";
-    //     strcat(url, tmp);
-    //     // para
-    //     strcat(url, para);
-    //     // cout<<url<<endl;
-        
-
-    // }
-
-    // return res;
-    // CURL *curl;
+   
     CURLcode res;
     std::string tmp;
     std::string url = targetNode + "/invoke?name=" + funcName + "&para=" + para;
@@ -59,10 +33,6 @@ string FuncScheduler::invoke(string funcName, string para, node targetNode) {
     curl_easy_setopt(curl, CURLOPT_POST, 0L);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_data);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-        res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-        }
     cout<<url.data()<<endl;
     curl_easy_setopt(curl, CURLOPT_URL, url.data());
     res = curl_easy_perform(curl);
@@ -84,18 +54,6 @@ node FuncScheduler::findNodeToCreate() {
 CURLcode FuncScheduler::createEntity(string funcName, string code, node targetNode) {
     CURLcode res;
     string tmp;
-    // char url[100] = "";
-    // char buff[2048] = "";
-    // // todo port
-    // strcat(url, targetNode.data());
-    // tmp = "/create";
-    // strcat(url, tmp.data());
-    // // funcName
-    // strcat(buff, funcName.data());
-    // tmp = " ";
-    // strcat(buff, tmp.data());
-    // // code
-    // strcat(buff, code.data());
 
     std::string url = targetNode + "/create";
     std::string buf = funcName + " " + code;

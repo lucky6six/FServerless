@@ -5,9 +5,9 @@ using namespace std;
 std::unordered_map<std::string,std::string> EntityFactory::codeTable;
 
 EntityFactory::EntityFactory(){
-    char result[CMD_RESULT_BUF_SIZE];
-    string cmd = "docker network create --subnet=172.50.0.0/24 fnet"; 
-    ExecuteCMD(cmd.data(), result);
+    // char result[CMD_RESULT_BUF_SIZE];
+    // string cmd = "docker network create --subnet=173.50.0.0/24 fnet"; 
+    // ExecuteCMD(cmd.data(), result);
 }
 EntityFactory::~EntityFactory(){
 }
@@ -29,28 +29,14 @@ bool EntityFactory::entityNew(std::string funcName,std::string code){
     if(entity.entityIp!=""){
         isok = true;
     }  
-    // //tode
-    // if(ISOLATION == "DOCKER"){
-    //     std::cout<<"create success "<<code<<std::endl;
-    //     isok = 1;
-    //     ip = "1.1.1.1:1";
-    //     entity.entityKey = ip;
-
-    // }
     if(isok){
         if(EntityTable::entityTable.isExist(funcName)){
-            cout<<"1"<<endl;
             EntityTable::entityTable.bindEntity(funcName,entity);
-            cout<<"2"<<endl;
         }else{
             vector<Entity> tmp;
-            cout<<"3"<<endl;
-            EntityTable::entityTable.table.emplace(funcName,tmp);
-            cout<<"4"<<endl;
-            EntityTable::funcCount.emplace(funcName,0);
-            cout<<"5"<<endl;
+            EntityTable::entityTable.table.emplace(pair<string, vector<Entity>>{funcName, tmp});
+            EntityTable::funcCount.emplace(pair<string,int>{funcName,0});
             EntityTable::entityTable.bindEntity(funcName,entity);
-            cout<<"1"<<endl;
             codeTable.emplace(funcName,code);
         }
         entityInterconnectEnable(entity);

@@ -12,5 +12,6 @@ public:
     Entity selectEntity(string funcName);
     string invokeEntity(string para, Entity entity);
     string invokeFunc(string funcName, string para);
+    string callFunc(string funcName, string para);
 };
 #endif // __ENTITYSCHEDULER_H__

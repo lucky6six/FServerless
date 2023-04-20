@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "hv/HttpServer.h"
 #include "EntityFactory.h"
@@ -8,8 +9,33 @@ using namespace std;
 
 int main() {
     HttpService router;
+
     static EntityScheduler* scheduler = new EntityScheduler();  
     static EntityFactory* factory = new EntityFactory();
+
+    thread caller([]{
+        HttpService router2;
+        router2.GET("/call", [](HttpRequest* req, HttpResponse* resp) {
+        // cout<<req->query_params["name"]<<endl;
+        // cout<<req->query_params["para"]<<endl;
+        // static FuncScheduler* scheduler = new FuncScheduler();
+        string funcName = req->query_params["name"];
+        string para = req->query_params["para"];
+        string ret = scheduler->callFunc(funcName,para);
+        // resp->json["origin"] = req->client_addr.ip;
+        // resp->json["url"] = req->url;
+        // resp->json["args"] = req->query_params;
+        // resp->json["headers"] = req->headers;
+        // resp->json["body"] = ret;
+        resp->String(ret);
+        return 200;
+        });
+        http_server_t server2;
+        server2.port = PORTI;
+        server2.service = &router2;
+        http_server_run(&server2);
+    });
+
     // FuncFactory* factory = new FuncFactory();
     // factory->functionCreate(funcName,code);
     // // curl -v http://ip:port/
@@ -46,6 +72,8 @@ int main() {
         resp->String(ret);
         return 200;
     });
+
+
 
     // // curl -v http://ip:port/echo -d "hello,world!"
     // router.POST("/echo", [](const HttpContextPtr& ctx) {
@@ -84,8 +112,13 @@ int main() {
     //     return ctx->send(resp.dump(2));
     // });
     http_server_t server;
+
     server.port = PORT;
+
     server.service = &router;
+
     http_server_run(&server);
+
+    caller.join();
     return 0;
 }

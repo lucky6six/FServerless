@@ -11,8 +11,6 @@ std::unordered_map<std::string,std::vector<Entity>> EntityTable::table;
 std::unordered_map<std::string,int> EntityTable::funcCount;
 
 EntityTable EntityTable::entityTable;
-
-
 size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
     ((std::string*)userdata)->append(ptr, nmemb);
@@ -78,7 +76,7 @@ Entity::Entity(std::string funcName,std::string code,int ip){
         std::cout<<cmd<<std::endl;
         ExecuteCMD(cmd.data(),result);
         cmd = "";
-        //tode mv become cp
+        //tode cp become mv
         cmd =cmd + "mv "+ DOCKER_DEMO_PATH + code + " "+DOCKER_IMAGES_INFO_PATH + funcName +"/main.py";
         std::cout<<cmd<<std::endl;
         ExecuteCMD(cmd.data(),result);
@@ -97,7 +95,7 @@ Entity::Entity(std::string funcName,std::string code,int ip){
         std::cout<<cmd<<std::endl;
         ExecuteCMD(cmd.data(), result);
         memset(result,'\0',sizeof(result));
-        std::string realIp = "172.50.0." + std::to_string(ip);
+        std::string realIp = "173.50.0." + std::to_string(ip);
         cmd = "docker run -d --network fnet --ip " + realIp+" "+ funcName;
         ExecuteCMD(cmd.data(), result);
         entityIp = realIp;
